@@ -1,6 +1,6 @@
-# Audio Annotation Interface
+# BatDetect2: Audio Annotation Interface
 
-This GUI allows you to view and edit the predictions from [BatDetect2](https://github.com/macaodha/batdetect2) and also to make your own annotations for training your own models. The GUI is web based and will run in your web browser locally - see the video linked below for an overview.  
+This GUI allows you to view and edit the predictions from the [BatDetect2](https://github.com/macaodha/batdetect2) bat call classification model. You can also make your own annotations for training your own models. The GUI is web based and will run in your web browser locally - see the video linked below for an overview.  
 
 
 ### Getting Started: Installation
@@ -26,8 +26,7 @@ There are keyboard shortcuts listed on the annotation page inside the GUI e.g. `
 To quit, type `Ctrl+C` into the command line console that is running the annotation application.  
 
 
-### Data Preparation
-
+### Data Preparation 
 The GUI will be slow if the input files are long e.g. > 5 seconds. It will also take a lot of time to annotation each file if it is too long.         
 
 You can clip your files so that they are shorter using the `prepare_audio_files.py` script. You need to specify the locations of the input files and where you want the shorter files to be saved. There are additional settings that allow you to specify the output duration and where in the file you start clipping from.      
@@ -51,12 +50,12 @@ Click on the image below to view a short tutorial that describes how to use the 
 [![Video](annotation_gui.jpg)](https://youtu.be/Mlb7OiYAaNA)
 
 
-### Advanced: Running the GUI on a Remote Server  
-You can find instructions [here](remote_instructions.md) for how to run the GUI on a web server that can then be made accessible to others over the internet. 
-
- 
 ### Data Format
 You can read more about the json data format [here](data_format.md).  
+
+
+### Advanced: Running the GUI on a Remote Server  
+You can find instructions [here](remote_instructions.md) for how to run the GUI on a web server that can then be made accessible to others over the internet. 
 
 
 ### Reference
