@@ -12,7 +12,7 @@ This GUI allows you to view and edit the predictions from the [BatDetect2](https
 `conda install --file requirements.txt`  
 
 
-## Getting Started: Running Locally  
+### Getting Started: Running Locally  
 To run the interface, open up the command line, change to the directory of where the application is stored and type:  
 `python application.py`
 
