@@ -1,0 +1,119 @@
+{
+  "annotated": true,
+  "annotation": [
+    {
+      "class": "Unknown",
+      "end_time": 0.4501145833333333,
+      "event": "Unknown",
+      "high_freq": 46875,
+      "individual": "2",
+      "low_freq": 29052.734375,
+      "start_time": 0.4019739583333333
+    },
+    {
+      "class": "Eptesicus serotinus",
+      "end_time": 0.020140625,
+      "event": "Echolocation",
+      "high_freq": 59082.03125,
+      "individual": "0",
+      "low_freq": 26611.328125,
+      "start_time": 0.0115
+    },
+    {
+      "class": "Eptesicus serotinus",
+      "end_time": 0.17402604166666666,
+      "event": "Echolocation",
+      "high_freq": 64941.40625,
+      "individual": "0",
+      "low_freq": 28320.3125,
+      "start_time": 0.16291666666666665
+    },
+    {
+      "class": "Eptesicus serotinus",
+      "end_time": 0.32338541666666665,
+      "event": "Echolocation",
+      "high_freq": 68603.515625,
+      "individual": "0",
+      "low_freq": 27587.890625,
+      "start_time": 0.31597916666666664
+    },
+    {
+      "class": "Eptesicus serotinus",
+      "end_time": 0.48220833333333335,
+      "event": "Echolocation",
+      "high_freq": 64941.40625,
+      "individual": "0",
+      "low_freq": 28320.3125,
+      "start_time": 0.474390625
+    },
+    {
+      "class": "Bat",
+      "end_time": 0.052234375,
+      "event": "Echolocation",
+      "high_freq": 54199.21875,
+      "individual": "1",
+      "low_freq": 46875,
+      "start_time": 0.04441666666666667
+    },
+    {
+      "class": "Bat",
+      "end_time": 0.11107291666666666,
+      "event": "Echolocation",
+      "high_freq": 63232.421875,
+      "individual": "1",
+      "low_freq": 44433.59375,
+      "start_time": 0.10448958333333333
+    },
+    {
+      "class": "Bat",
+      "end_time": 0.13288020833333333,
+      "event": "Echolocation",
+      "high_freq": 54443.359375,
+      "individual": "1",
+      "low_freq": 46875,
+      "start_time": 0.12917708333333333
+    },
+    {
+      "class": "Bat",
+      "end_time": 0.20488541666666665,
+      "event": "Echolocation",
+      "high_freq": 52734.375,
+      "individual": "1",
+      "low_freq": 44921.875,
+      "start_time": 0.199125
+    },
+    {
+      "class": "Bat",
+      "end_time": 0.22586979166666668,
+      "event": "Echolocation",
+      "high_freq": 53955.078125,
+      "individual": "1",
+      "low_freq": 47607.421875,
+      "start_time": 0.21722916666666667
+    },
+    {
+      "class": "Bat",
+      "end_time": 0.2945833333333333,
+      "event": "Echolocation",
+      "high_freq": 59326.171875,
+      "individual": "1",
+      "low_freq": 45898.4375,
+      "start_time": 0.286765625
+    },
+    {
+      "class": "Bat",
+      "end_time": 0.380578125,
+      "event": "Echolocation",
+      "high_freq": 54931.640625,
+      "individual": "1",
+      "low_freq": 45654.296875,
+      "start_time": 0.37522916666666667
+    }
+  ],
+  "class_name": "Eptesicus serotinus",
+  "duration": 0.5,
+  "id": "20180530_213516-EPTSER-LR_0_0.5.wav",
+  "issues": true,
+  "notes": "",
+  "time_exp": 1
+}

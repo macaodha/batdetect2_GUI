@@ -1,0 +1,322 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<section id="ss_spectrogram" style="display:block">
+  <div class="left_axis axis">
+    <!--<img src='/static/hz_scale_150_left.png' />-->
+  </div>
+  <div class="right_axis axis">
+    <!--<img src='/static/hz_scale_150_right.png' />-->
+  </div>
+  <div class="spec_well">
+    <img id="spec_im" src="data:image/jpeg;base64,{{im_data}}" alt="{{annotation.id}}" />
+
+    <div class="progress" id="progress">
+      <div class="progress-bar" id="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+  </div>
+</section>
+
+
+<div>
+  <audio id="player" controls style="display: none;">
+       <source src="data:audio/wav;base64,{{aud_data}}" type="audio/wav">
+  </audio>
+</div>
+
+
+<div class="container info_area" style="display:block;">
+
+  <div class="row">
+
+    <div class="col-sm-7">
+
+      <section id="active_annotation_data" class="box_section">
+
+        <div id="selected_annotation_heading" class="box_heading">
+          <span id="none_selected">No annotation selected <br></span>
+
+            <span id="box_info" class="init_hidden">
+                Duration:  <span id="box_duration"></span> |
+                Low Freq:  <span id="box_low_freq"></span> |
+                High Freq: <span id="box_high_freq">
+             </span>
+        </div>
+
+        <div class="row row_margin">
+
+          <div class="col-lg-6 form-group">
+            <label for="class_select">Class</label><br>
+            <select class="selectpicker" data-live-search="true" id="class_select">
+              {% for item in class_names %}
+              <option data-tokens="{{ item }}">{{ item }}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div class="col-md-6">
+            <div class="row">
+              <div class="col-sm-4 form-group">
+                <label for="individual_id_select">Individual</label>
+                <select class="form-control" id="individual_id_select">
+                  {% for item in range(-1, 10) %}
+                  <option>{{ item }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+
+              <div class="col-sm-8 form-group">
+                <label for="event_select">Event</label>
+                <select class="form-control" id="event_select">
+                  {% for item in event_names %}
+                  <option>{{ item }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+          </div>
+
+
+
+        </div><!-- row -->
+
+        </section>
+
+        <form method="post" onsubmit="app.get_output()">
+
+          <!-- notes and issues (unsure) are for the recording, not the individual annotations -->
+          <div class = "row row_margin">
+            <div class="col-md-9 form-group">
+              <label for="notes">Notes</label>
+              <textarea class='form-control'name="notes" id="notes" cols="40" rows="1">{{annotation.notes}}</textarea>
+            </div>
+
+            <div class="col-md-3 form-group">
+              <label><input type="checkbox" name="unsure" id="unsure"  {% if annotation.issues %}checked="checked"{% endif %} value="unsure"> Unsure</label>
+            </div>
+          </div><!-- row -->
+
+          <input type="text" name="updated_annotations" id="updated_annotations" hidden />
+          <input type="text" name="file_name" id="file_name" value="{{ annotation.file_name }}" hidden />
+          <input type="text" name="dataset_id" id="dataset_id" value="{{ dataset_id }}" hidden  />
+          <input type="text" name="change_made" id="change_made" hidden />
+
+          <div class="row row_margin">
+            <div class="col-md-8 form-group">
+              <button type="button" id="audio_control" class="btn btn-success">play</button>
+              <!-- <a href="/annotate/{{ prev_item }}" class="btn btn-warning" role="button">prev</a>
+              <a href="/annotate/{{ next_item }}" class="btn btn-warning" role="button">next</a> -->
+              <a href="/annotate?file_name={{ prev_file }}&dataset_id={{ dataset_id }}" class="btn btn-warning" role="button">prev</a>
+              <a href="/annotate?file_name={{ next_file }}&dataset_id={{ dataset_id }}" class="btn btn-warning" role="button">next</a>
+              <input id="submit_btn" type="submit" class="btn btn-info" value="submit">
+            </div>
+          </div><!-- row -->
+
+        </form>
+
+
+
+    </div>
+
+
+
+    <div class="col-sm-5">
+
+      <section id="spectrogram_params" class="box_section off">
+
+        <form method="post" action="/spectrogram_params" onsubmit="return app.validate_spectrogram_params()">
+
+          <input type="text" name="file_name" id="file_name" value="{{ annotation.file_name }}" hidden />
+          <input type="text" name="dataset_id" id="dataset_id" value="{{ dataset_id }}" hidden  />
+
+          <div class="box_heading">Spectrogram Parameters</div>
+
+          <div class="box_content">
+
+            <div class="row row_margin">
+              <label class="col-md-6">Window Length</label>
+              <div class="col-md-6">
+                <input id="fft_win_length" name="fft_win_length" value="{{ spectrogram_params.fft_win_length }}"  >
+                 <select id="win_length_units" name="win_length_units">
+                   <option value="samples"{% if spectrogram_params.win_length_units =='samples'%} selected{% endif %}>Samples</option>
+                   <option value="seconds"{% if spectrogram_params.win_length_units =='seconds'%} selected{% endif %}>Seconds</option>
+                 </select>
+                 (<span id="win_length_other"></span>)</div>
+              <label class="col-md-6">FFT Overlap <span class="tip">0 = no overlap, 0.5 = 50% overlap</span></label>
+              <div class="col-md-6"><input id="fft_overlap" name="fft_overlap" type="number" step="0.0001"  max="0.99" value="{{ spectrogram_params.fft_overlap }}" ></div>
+              <label class="col-md-6">Max Freq (Hz)</label>
+              <div class="col-md-6"><input id="max_freq" name="max_freq" type="number"  value="{{ spectrogram_params.max_freq }}" ></div>
+            </div>
+
+            <button class="btn btn-info" value="apply">apply</button>
+
+            <p id="spectrogram_params_warnings"></p>
+            <p id="spectrogram_params_errors"></p>
+
+            <!--<a class="btn btn-info" href="/annotate/{{ file_index }}">Apply</a>-->
+
+          </div>
+
+        </form>
+
+      </section>
+
+      <section id="file_list_progress" class="box_section">
+
+        <div class="box_heading">
+
+          <div class="file_list_progress_legend">
+            <div class="progress_item annotated"></div> Done
+            <div class="progress_item"></div> To Do
+            <div class="progress_item issues"></div> Unsure
+            <div class="progress_item current"></div> Current
+          </div>
+
+          Files progress
+
+        </div>
+
+        <div class="progress_items_container">
+
+          {% for item in annotations %}
+          <!-- <a href="/annotate/{{ loop.index - 1 }}" class="progress_item {% if item.annotated %} annotated {% endif %}{% if loop.index - 1 == file_index %} current {% endif %}"> -->
+          <a href="/annotate?file_name={{ item.file_name }}&dataset_id={{ dataset_id }}" class="progress_item {% if item.issues%} issues {% elif item.annotated %} annotated {% endif %}{% if loop.index - 1 == file_index %} current {% endif %}">
+            <div class="item_info">
+              <div class="progress_items_name">{{loop.index - 1}}: {{ item.id }}</div>
+              <div class="progress_items_meta">
+                <span><i class="far fa-clock"></i> <strong>{{ item.duration|round(3) }}</strong>s</span>
+                <span><i class="far fa-object-ungroup"></i> <strong>{{ item.annotation|length }}</strong> annotations</span>
+              </div>
+              {% if item.notes %}<div class="progress_items_notes">{{ item.notes }}</div>{% endif %}
+            </div>
+            <span class="progress_item_label">{{ loop.index - 1 }}</span>
+          </a>
+          {% endfor %}
+
+        </div>
+
+      </section>
+
+      <section id="file_info">
+        {% if annotation.issues %}
+        <font color="red"><h4>{{file_index}}: {{annotation.id}}</h4></font>
+        {% else %}
+        <h4>{{file_index}}: {{annotation.id}}</h4>
+        {% endif %}
+        <table>
+          {% if annotation.class_name is defined and annotation_class_name %}
+          <tr> <td>Species </td> <td>{{annotation.class_name}}</td></tr>
+          {% endif %}
+          <tr> <td>Current time </td> <td><span id="current_time"></span></td></tr>
+          {% if annotation.lat is defined %}
+          <tr> <td>Country recorded </td> <td>{{annotation.country}}<a href="https://www.google.com/maps/search/?api=1&query={{annotation.lat}},{{annotation.long}}" target="_blank">(view  map)</a> </td> </tr>
+          {% endif %}
+          {% if annotation.recording_date is defined and annotation.recording_date %}
+          <tr> <td>Recording date </td> <td>{{annotation.recording_date}}</td> </tr>
+          {% endif %}
+          <tr> <td>Clip duration (secs) </td> <td>{{file_params.duration|round(3)}}</td> </tr>
+          <tr> <td>Original time expansion factor </td> <td>{{annotation.time_exp}}</td> </tr>
+          <tr> <td>Sampling rate </td> <td>{{file_params.sampling_rate}}</td> </tr>
+          <tr> <td>Original number of calls </td> <td>{{annotation.annotation|length}}</td> </tr>
+        </table>
+      </section>
+
+
+
+    </div><!-- col -->
+
+  </div><!-- row -->
+
+  <div class="row row_margin">
+    <button type="button" class="btn btn-default" data-toggle="collapse" data-target="#keyboardshortcuts">Display Keyboard Shortcuts</button>
+    <div id="keyboardshortcuts" class="collapse">
+      <p><strong>s</strong> = save</p>
+      <p><strong>u</strong> = unsure</p>
+      <p><strong>d or backspace</strong> = delete</p>
+      <p><strong>space</strong> = play audio</p>
+      <p><strong>click on audio bar</strong> = skip audio</p>
+      <p><strong>[0-9]</strong> = set individual id (when selected)</p>
+      <p><strong>c</strong> = move forward in time</p>
+      <p><strong>z</strong> = move backward in time</p>
+    </div>
+  </div>
+
+
+  <div class="row row_margin">
+    <hr />
+    <footer>
+      <h4>Go back to the <a href="/file_list">list of files</a>.</h4>
+    </footer>
+  </div>
+
+
+</div>
+
+
+
+{% endblock %}
+
+
+{% block scripts %}
+
+<script>
+    var spec_width = {{ file_params.spec_width }};
+
+    // set the default values for the selections
+    {% if annotation.class_name is defined %}
+    $('#class_select').val("{{ annotation.class_name }}");
+    $('#individual_id_select').val("0");
+    $('#event_select').val("Echolocation");
+    {% endif %}
+
+
+    // values for jcrop options
+    var jcrop_opts = {};
+
+    {% if annotation.class_name is defined %}
+    jcrop_opts.class_name = "{{ annotation.class_name }}";
+    {% endif %}
+
+
+    var jcrop_items = [];
+
+    file_params = {
+         fft_win_length_secs: {{ file_params.fft_win_length_secs }},
+         sampling_rate: {{ file_params.sampling_rate }},
+         fft_overlap: {{ file_params.fft_overlap }},
+         spec_height: {{ file_params.spec_height }},
+         spec_width: {{ file_params.spec_width }},
+         duration_listen: {{file_params.duration_listen}} // firefox has a problem reading audio file duration
+    };
+
+    spectrogram_params = {
+        max_freq: {{ spectrogram_params.max_freq }},
+        fft_win_length: {{ spectrogram_params.fft_win_length }},
+        win_length_units: '{{ spectrogram_params.win_length_units }}'
+    };
+
+    {% for item in range(annotation.annotation|length) %}
+    jcrop_items.push(
+        {
+         class: "{{ annotation.annotation[item].class }}",
+         individual: {{ annotation.annotation[item].individual }},
+         start_time: {{ annotation.annotation[item].start_time }},
+         end_time: {{ annotation.annotation[item].end_time }},
+         high_freq: {{ annotation.annotation[item].high_freq }},
+         low_freq: {{ annotation.annotation[item].low_freq }},
+         event: "{{ annotation.annotation[item].event }}"
+         }
+
+    )
+
+    {% endfor %}
+
+    var annotation_id = "{{annotation.id}}";
+    var dataset_id = "{{dataset_id}}";
+
+    $(document).ready(app.annotate_init);
+
+</script>
+
+{% endblock %}

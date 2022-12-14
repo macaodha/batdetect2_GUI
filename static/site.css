@@ -1,0 +1,360 @@
+.left_axis {
+  height: 700px;
+  width: 50px;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  background-color: #FFFFFF;
+  overflow: hidden;
+  padding: 0px;
+  margin: 0px;
+}
+
+.axis div {
+    position: absolute;
+    font-size: 11px;
+    border-top: 1px solid #777;
+    text-align: right;
+}
+
+.right_axis {
+  height: 700px;
+  width: 50px;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  background-color: #FFFFFF;
+  overflow: hidden;
+  padding: 0px;
+  margin: 0px;
+}
+
+.spec_well {
+  background-color: #FFFFFF;
+  margin-left: 50px;
+  margin-right: 50px;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  padding: 0px;
+  max-width: calc(100% - 100px)
+}
+
+.info_area {
+  background-color: #FFFFFF;
+  margin-left: 50px;
+  margin-right: 50px;
+  padding: 0px;
+}
+
+.progress {
+  height: 30px;
+}
+
+.row_margin{
+  margin-left : 12px;
+  margin-right : 12px;
+}
+
+.progress-bar {
+    -webkit-transition: none;
+    -moz-transition: none;
+    -ms-transition: none;
+    -o-transition: none;
+    transition: none;
+}​
+
+img {
+    padding:0px;
+    margin:0px;
+}
+
+
+/* styles for validation helpers */
+.field-validation-error {
+    color: #b94a48;
+}
+
+.field-validation-valid {
+    display: none;
+}
+
+input.input-validation-error {
+    border: 1px solid #b94a48;
+}
+
+input[type="checkbox"].input-validation-error {
+    border: 0 none;
+}
+
+.validation-summary-errors {
+    color: #b94a48;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+
+/* File list progress */
+
+
+.box_section {
+  border: 1px solid #aaa;
+  border-radius: 10px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.box_section .box_heading {
+
+  padding: 10px 20px 10px 20px;
+  background: #e3e3e3;
+  border-radius: 10px 10px 0px 0px;
+
+}
+
+.progress_items_container {
+  padding: 8px;
+
+
+}
+
+
+.file_list_progress_legend {
+    float: right;
+    display: flex;
+}
+
+.file_list_progress_legend div {
+  margin-left: 15px;
+  margin-right: 5px;
+
+}
+
+.progress_items_container {
+  display: flex;
+  flex-wrap: wrap;
+  position: relative;
+}
+
+.progress_item {
+  min-width: 20px;
+  min-height: 20px;
+  background-color: #999;
+  position: relative;
+  z-index: 1;
+  display: block;
+  border-radius: 8px;
+  margin: 1px
+}
+
+.progress_item_label {
+    font-size: 0.8em;
+    color: #222;
+    text-align: center;
+    width: 100%;
+    display: inline-block;
+    position: relative;
+    top: -1px;
+}
+
+.current .progress_item_label {
+    color: #fff;
+
+}
+
+.progress_item.annotated {
+   background-color: #4aa933;
+}
+
+.progress_item.issues {
+   background-color: #d14949;
+}
+
+.progress_item.current {
+    background-color: #1370d0;
+}
+
+.toggle {
+  display: inline-block;
+  float: right;
+  cursor: pointer;
+  opacity: 0.8;
+}
+
+.toggle:hover {
+    color: #000;
+
+}
+
+
+.toggle:before {
+  font-family: 'Arial';
+  content: 'hide ';
+  font-size: 0.8em;
+}
+
+.off .toggle::before {
+  content: "show ";
+}
+.toggle:after {
+  font-size: 1.1em;
+  content: '\f0d8';
+}
+.off .toggle::after {
+  content: "\f0d7";
+}
+
+.off .box_content {
+  display: none;
+}
+
+.box_content {
+  margin-top: 10px;
+}
+
+.box_section.off .box_heading {
+
+  border-radius: 10px 10px 10px 10px;
+
+}
+
+
+
+.progress_items_container .progress_item .item_info {
+    display: none;
+    position: absolute;
+    bottom: 25px;
+    left: -50px;
+    background: rgba(255,255,255,0.9);
+    color: #000000;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #000;
+    box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.2);
+    width: 300px;
+    height: auto;
+    padding: 10px;
+
+
+}
+
+.progress_items_container .progress_item:hover {
+    z-index: 100;
+    box-shadow: inset 0 0 10px #fff
+}
+
+.progress_items_container .progress_item:hover .item_info {
+    display: block;
+}
+
+.progress_items_container .progress_items_name {
+   font-weight: bold;
+   color: #555;
+   border-bottom: 1px solid #ddd;
+   margin-bottom: 3px;
+   padding-bottom: 3px;
+}
+
+.progress_items_container .progress_items_meta {
+   color: #123456;
+   padding-bottom: 3px;
+}
+
+/*
+.progress_items_container .progress_items_meta span:not(:last-child):after {
+   content: " | ";
+   color: #ccc;
+}
+*/
+.progress_items_container .progress_items_meta span {
+  margin-right: 10px;
+}
+.progress_items_container .progress_items_meta span:nth-child(1) {
+   color: #d68014;
+}
+
+.progress_items_container .progress_items_meta span:nth-child(2) {
+   color: #1497d6;
+}
+
+
+/* invisible div to bridge to the item so the hover doesn't stop */
+.progress_items_container .item_info:after {
+  content: "";
+  width: 36px;
+  height: 10px;
+  position: absolute;
+  bottom: -10px;
+  left: 40px;
+
+
+}
+
+
+#file_info {
+  margin-top: 20px;
+}
+
+#file_info table {
+  width: 100%
+}
+
+#file_info td {
+    margin: 0px;
+    padding: 5px;
+}
+
+
+#file_info td:first-child {
+    color: #333;
+}
+#file_info td:last-child {
+    font-weight: bold;
+}
+
+tr {
+    border-bottom: 1px solid #ddd;
+}
+
+
+#spectrogram_params input {
+    width: 50%;
+}
+#spectrogram_params label {
+    text-align: right;
+}
+
+#spectrogram_params_warnings {
+    color: #d26b01;
+}
+#spectrogram_params_errors {
+    color: #d82917;
+}
+
+#spectrogram_params_warnings, #spectrogram_params_errors {
+    margin-left: 10px;
+
+}
+
+#spectrogram_params a {
+    display: block;
+    margin: 10px auto 10px auto;
+    width: 100px;
+}
+
+#spectrogram_params .tip {
+  display: none;
+}
+
+#spectrogram_params button {
+    display: block;
+    margin: 1em auto 1em auto;
+}
+
+.jcrop-selection.jcrop-current {
+    outline: 2px dotted rgba(50,255,50,0.8);
+}
+
+.init_hidden {
+    display: none;
+}

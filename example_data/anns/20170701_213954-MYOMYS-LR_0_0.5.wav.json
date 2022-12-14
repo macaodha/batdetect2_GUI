@@ -1,0 +1,110 @@
+{
+  "annotated": true,
+  "annotation": [
+    {
+      "class": "Myotis mystacinus",
+      "end_time": 0.151696,
+      "event": "Echolocation",
+      "high_freq": 105957.03125,
+      "individual": "0",
+      "low_freq": 28564.453125,
+      "start_time": 0.146366
+    },
+    {
+      "class": "Myotis mystacinus",
+      "end_time": 0.028696,
+      "event": "Echolocation",
+      "high_freq": 95214.84375,
+      "individual": "0",
+      "low_freq": 34667.96875,
+      "start_time": 0.025006
+    },
+    {
+      "class": "Myotis mystacinus",
+      "end_time": 0.059036,
+      "event": "Echolocation",
+      "high_freq": 107910.15625,
+      "individual": "0",
+      "low_freq": 30517.578125,
+      "start_time": 0.053296
+    },
+    {
+      "class": "Myotis mystacinus",
+      "end_time": 0.120126,
+      "event": "Echolocation",
+      "high_freq": 106689.453125,
+      "individual": "0",
+      "low_freq": 37353.515625,
+      "start_time": 0.116436
+    },
+    {
+      "class": "Myotis mystacinus",
+      "end_time": 0.207866,
+      "event": "Echolocation",
+      "high_freq": 104736.328125,
+      "individual": "0",
+      "low_freq": 36865.234375,
+      "start_time": 0.202536
+    },
+    {
+      "class": "Myotis mystacinus",
+      "end_time": 0.237796,
+      "event": "Echolocation",
+      "high_freq": 108154.296875,
+      "individual": "0",
+      "low_freq": 30273.4375,
+      "start_time": 0.232056
+    },
+    {
+      "class": "Myotis mystacinus",
+      "end_time": 0.331276,
+      "event": "Echolocation",
+      "high_freq": 110351.5625,
+      "individual": "0",
+      "low_freq": 29296.875,
+      "start_time": 0.325126
+    },
+    {
+      "class": "Myotis mystacinus",
+      "end_time": 0.375556,
+      "event": "Echolocation",
+      "high_freq": 107177.734375,
+      "individual": "0",
+      "low_freq": 36376.953125,
+      "start_time": 0.370636
+    },
+    {
+      "class": "Myotis mystacinus",
+      "end_time": 0.416966,
+      "event": "Echolocation",
+      "high_freq": 116943.359375,
+      "individual": "0",
+      "low_freq": 31005.859375,
+      "start_time": 0.412866
+    },
+    {
+      "class": "Myotis mystacinus",
+      "end_time": 0.441976,
+      "event": "Echolocation",
+      "high_freq": 110351.5625,
+      "individual": "0",
+      "low_freq": 40771.484375,
+      "start_time": 0.436236
+    },
+    {
+      "class": "Myotis mystacinus",
+      "end_time": 0.493636,
+      "event": "Echolocation",
+      "high_freq": 109375,
+      "individual": "0",
+      "low_freq": 40039.0625,
+      "start_time": 0.489946
+    }
+  ],
+  "class_name": "Myotis mystacinus",
+  "duration": 0.5,
+  "id": "20170701_213954-MYOMYS-LR_0_0.5.wav",
+  "issues": false,
+  "notes": "",
+  "time_exp": 1
+}

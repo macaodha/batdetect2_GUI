@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Annotation Web App - File List</title>
+    <!-- <link rel="stylesheet" type="text/css" href="../static/site.css" /> -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+  <br>
+  <div class="row">
+    <h4>Audio path:{{ audio_dir }}<br>
+        Annotation path:{{ annotation_dir }}</h4>
+    <br>
+  </div>
+
+  <div class="row">
+  <table id="file_list" class="display" style="width:100%">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>File Name</th>
+          <th>Duration (secs)</th>
+          <th>Num Calls</th>
+          <th>Annotated</th>
+          <th>Unsure</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        {% for item in annotations %}
+  	    <tr>
+          <td>{{ loop.index0 }}</td>
+          <td><a href="/annotate?file_name={{ item.file_name }}&dataset_id={{ dataset_id }}">{{ item.file_name }}</a></td>
+          <td>{{ item.duration|round(3) }}</td>
+          <td>{{ item.annotation|length }}</td>
+          <td>{% if item.annotated %}True{% else %}<font color="red">False</font>{% endif %}</td>
+          <td>{% if not item.issues %}False{% else %}<font color="red">True</font>{% endif %}</td>
+          {% if item.notes is defined %}
+            <td>{{ item.notes[:50] }}</td>
+          {% else %}
+            <td></td>
+          {% endif %}
+
+        </tr>
+  	   {% endfor %}
+
+       <!-- <tfoot>
+       <tr>
+          <td>Total</td>
+          <td>{{ annotations|length }}</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+       </tr>
+      </tfoot> -->
+
+      </tbody>
+
+    </table>
+  </div>
+
+  <div class="row">
+    <hr />
+    <footer>
+    <h4>Select a different <a href="/dataset_list">dataset</a>.</h4>
+    </footer>
+  </div>
+
+</div>
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="../static/site.js"></script>
+
+<script>
+$(document).ready(function() {
+    $('#file_list').DataTable( {
+        "lengthMenu": [[20, -1], [20, "All"]]
+    } );
+    app.filelist_init();
+} );
+</script>
+
+</body>
+</html>

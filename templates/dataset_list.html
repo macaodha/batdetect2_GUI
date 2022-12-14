@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Annotation Web App - Dataset List</title>
+    <!-- <link rel="stylesheet" type="text/css" href="../static/site.css" /> -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+
+</head>
+
+<body>
+
+<div class="container">
+  <div class="row">
+    <div class="form-group col-sm-8">
+      <h3>Please enter the path to the audio files.</h3>
+    </div>
+  </div>
+  <form method="POST" onsubmit="app.savePaths(); return true;">
+    <div class="row">
+      <div class="form-group col-sm-8">
+        <label for="audio_dir">Audio Directory:</label>
+        <input type="text" required='required' class="form-control" name="audio_dir" value="{{ audio_dir }}">
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-sm-8">
+        <label for="annotation_dir">Annotation Directory:</label>
+        <input type="text" required='required' class="form-control" name="annotation_dir" value="{{ annotation_dir }}">
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-sm-8">
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <a class="btn btn-primary clear">Clear</a>
+      </div>
+    </div>
+  </form>
+
+
+  {% if dataset_info|length > 0 %}
+  <div class="row col-sm-8">
+      <h3>Or select from an existing set:</h3>
+  </div>
+  {% endif %}
+
+  <div class="row col-sm-8">
+    {% for item in dataset_info %}
+    <h4><a href="/file_list?dataset_id={{ item.dataset_id }}">Dataset {{ loop.index0 }}</a></h4>
+    Audio path:{{ item.annotation_dir }} <br>
+    Annotation path:{{ item.audio_dir }} <br>
+    Number of files:{{ item.num_files }} <br><br>
+    {% endfor %}
+  </div>
+
+  <!-- <tfoot>
+  <tr>
+     <td>Total</td>
+     <td>{{ annotations|length }}</td>
+     <td></td>
+     <td></td>
+     <td></td>
+     <td></td>
+     <td></td>
+  </tr>
+ </tfoot> -->
+
+
+</div>
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="../static/site.js"></script>
+
+<script>
+$(document).ready(function() {
+    $('#file_list').DataTable( {
+        "lengthMenu": [[20, -1], [20, "All"]]
+    } );
+    app.filelist_init();
+} );
+</script>
+
+</body>
+</html>
