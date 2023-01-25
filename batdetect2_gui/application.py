@@ -157,16 +157,11 @@ def submit_annotations():
             dataset["annotations"][input_id]["issues"] = False
 
         # save to disk
-        save_annotation(
-            dataset["annotation_dir"], dataset["annotations"][input_id]
-        )
+        save_annotation(dataset["annotation_dir"], dataset["annotations"][input_id])
 
         # add the submitted classes to the list, then sort them and remove duplicates
         this_file_class_list = set(
-            [
-                aa["class"]
-                for aa in dataset["annotations"][input_id]["annotation"]
-            ]
+            [aa["class"] for aa in dataset["annotations"][input_id]["annotation"]]
         )
         sorted_classes = sorted(
             list(
@@ -178,9 +173,7 @@ def submit_annotations():
 
     # redirect to the next item to annotate
     file_id = dataset["file_names"].index(request.form["file_name"])
-    next_id = select_file(
-        len(dataset["file_names"]), file_id=file_id, next_file=True
-    )
+    next_id = select_file(len(dataset["file_names"]), file_id=file_id, next_file=True)
     url_str = (
         "/annotate/?file_name="
         + dataset["file_names"][next_id]
@@ -207,10 +200,7 @@ def render_annotation_page():
     if "name" not in session.keys():
         initialize_session(default_file)
 
-    if (
-        "dataset_id" in request.args
-        and request.args["dataset_id"] in datasets
-    ):
+    if "dataset_id" in request.args and request.args["dataset_id"] in datasets:
         session["dataset_id"] = request.args["dataset_id"]
         session.modified = True
 
@@ -235,16 +225,10 @@ def render_annotation_page():
 
     print("serving ", annotation["file_name"])
     file_params, im_data, aud_data = get_data(annotation, use_cache=True)
-    next_file = dataset["file_names"][
-        (cur_file + 1) % len(dataset["file_names"])
-    ]
-    prev_file = dataset["file_names"][
-        (cur_file - 1) % len(dataset["file_names"])
-    ]
+    next_file = dataset["file_names"][(cur_file + 1) % len(dataset["file_names"])]
+    prev_file = dataset["file_names"][(cur_file - 1) % len(dataset["file_names"])]
 
-    annotations_sorted = [
-        dataset["annotations"][ff] for ff in dataset["file_names"]
-    ]
+    annotations_sorted = [dataset["annotations"][ff] for ff in dataset["file_names"]]
 
     return render_template(
         "annotate.html",
@@ -312,10 +296,7 @@ def render_file_list_page():
     if "name" not in session.keys():
         initialize_session()
 
-    if (
-        "dataset_id" in request.args
-        and request.args["dataset_id"] in datasets
-    ):
+    if "dataset_id" in request.args and request.args["dataset_id"] in datasets:
         session["dataset_id"] = request.args["dataset_id"]
         session.modified = True
 
@@ -439,9 +420,7 @@ def get_data(annotation, use_cache=True):
     """
     # check if data has already been computed - if yes, return it
     dataset = datasets[session["dataset_id"]]
-    cache_key = gen_cache_key(
-        annotation["file_name"], get_spectrogram_params()
-    )
+    cache_key = gen_cache_key(annotation["file_name"], get_spectrogram_params())
     if use_cache:
         if cache_key in cache and cache[cache_key]["thread_lock"] is False:
             print("  using cached data for " + annotation["file_name"])
@@ -464,9 +443,7 @@ def get_data(annotation, use_cache=True):
 
     else:
         # if no, compute from scratch
-        file_params, im_data, aud_data = compute_data(
-            annotation, dataset["audio_dir"]
-        )
+        file_params, im_data, aud_data = compute_data(annotation, dataset["audio_dir"])
 
     return file_params, im_data, aud_data
 
@@ -495,9 +472,7 @@ def cache_item(annotation):
     :return:
     """
     audio_dir = datasets[session["dataset_id"]]["audio_dir"]
-    cache_key = gen_cache_key(
-        annotation["file_name"], get_spectrogram_params()
-    )
+    cache_key = gen_cache_key(annotation["file_name"], get_spectrogram_params())
 
     # initialise cache item
     cache[cache_key] = {
@@ -567,8 +542,7 @@ def update_cache(file_id, file_names, annotations, audio_dir):
     # to save space, we remove the oldest items from the cache
     # size of cache is set in the config file
     cache_data = [
-        {k: item[k] for k in ("cache_key", "created_at")}
-        for item in cache.values()
+        {k: item[k] for k in ("cache_key", "created_at")} for item in cache.values()
     ]
     cache_data = sorted(cache_data, key=lambda item: item["created_at"])
     cache_size = max(config.CACHE_SIZE, 3)  # want to keep the most recent ones
@@ -770,3 +744,7 @@ def create_dataset(audio_dir, annotation_dir):
     datasets[dataset["id"]] = dataset
 
     return dataset["id"]
+
+
+def main():
+    application.run(host="127.0.0.1", port=8000)
