@@ -19,22 +19,26 @@ def compute_audio_data(annotation, audio_dir, playback_time_expansion):
       - (float) file duration
     """
     # load wav
-    wav_file_path = os.path.join(audio_dir, annotation['file_name'].replace('.json', ''))
-    sampling_rate, audio_raw = au.load_audio_file(wav_file_path, annotation['time_exp'])
+    wav_file_path = os.path.join(
+        audio_dir, annotation["file_name"].replace(".json", "")
+    )
+    sampling_rate, audio_raw = au.load_audio_file(
+        wav_file_path, annotation["time_exp"]
+    )
     duration = audio_raw.shape[0] / float(sampling_rate)
 
     # apply time expansion if the file is high frequency
-    time_exp_listen = annotation['time_exp']
-    if annotation['time_exp'] == 1:
+    time_exp_listen = annotation["time_exp"]
+    if annotation["time_exp"] == 1:
         time_exp_listen = playback_time_expansion
-    elif annotation['time_exp'] == playback_time_expansion:
-        print('Correct time expansion already used.')
+    elif annotation["time_exp"] == playback_time_expansion:
+        print("Correct time expansion already used.")
     else:
-        raise Exception('Unsuported time expansion factor.')
+        raise Exception("Unsuported time expansion factor.")
 
     aud_file = BytesIO()
-    wavfile.write(aud_file, int(sampling_rate/time_exp_listen), audio_raw)
-    aud_data = base64.b64encode(aud_file.getvalue()).decode('utf-8')
+    wavfile.write(aud_file, int(sampling_rate / time_exp_listen), audio_raw)
+    aud_data = base64.b64encode(aud_file.getvalue()).decode("utf-8")
     aud_file.close()
 
     return sampling_rate, audio_raw, aud_data, duration
@@ -53,14 +57,14 @@ def compute_image_data(audio_raw, sampling_rate, spec_params):
     spec_raw = au.generate_spectrogram(audio_raw, sampling_rate, spec_params)
     spec_raw -= spec_raw.min()
     spec_raw /= spec_raw.max()
-    cmap = plt.get_cmap('inferno')
-    spec = (cmap(spec_raw)[:, :, :3]*255).astype(np.uint8)
+    cmap = plt.get_cmap("inferno")
+    spec = (cmap(spec_raw)[:, :, :3] * 255).astype(np.uint8)
 
     # create output image
     im = Image.fromarray(spec)
     im_file = BytesIO()
     im.save(im_file, "JPEG", quality=90)
-    im_data = base64.b64encode(im_file.getvalue()).decode('utf-8')
+    im_data = base64.b64encode(im_file.getvalue()).decode("utf-8")
     im_file.close()
 
     return im_data, spec.shape
