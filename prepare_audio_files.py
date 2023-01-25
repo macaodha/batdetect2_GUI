@@ -1,10 +1,10 @@
 """
 You can clip your files so that they are shorter using this script. 
 You need to specify the locations of the input files and where you want the 
-shorter files to be saved. 
+shorter files to be saved.
 
 There are additional settings that allow you to specify the output duration 
-and where in the file you start clipping from.      
+and where in the file you start clipping from.
 """
 
 import argparse
