@@ -6,14 +6,19 @@ import hashlib
 import json
 import os
 import random
-import sys
 import time
 import uuid
 from pathlib import Path
 from threading import Thread
 
-from flask import (Flask, copy_current_request_context, redirect,
-                   render_template, request, session)
+from flask import (
+    Flask,
+    copy_current_request_context,
+    redirect,
+    render_template,
+    request,
+    session,
+)
 
 from batdetect2_gui import config
 from batdetect2_gui import generate_data as gd
@@ -172,9 +177,9 @@ def submit_annotations():
         dataset["class_names"] = config.CLASS_NAMES + sorted_classes
 
     # redirect to the next item to annotate
-    id = dataset["file_names"].index(request.form["file_name"])
+    file_id = dataset["file_names"].index(request.form["file_name"])
     next_id = select_file(
-        len(dataset["file_names"]), file_id=id, next_file=True
+        len(dataset["file_names"]), file_id=file_id, next_file=True
     )
     url_str = (
         "/annotate/?file_name="
@@ -204,7 +209,7 @@ def render_annotation_page():
 
     if (
         "dataset_id" in request.args
-        and request.args["dataset_id"] in datasets.keys()
+        and request.args["dataset_id"] in datasets
     ):
         session["dataset_id"] = request.args["dataset_id"]
         session.modified = True
@@ -309,7 +314,7 @@ def render_file_list_page():
 
     if (
         "dataset_id" in request.args
-        and request.args["dataset_id"] in datasets.keys()
+        and request.args["dataset_id"] in datasets
     ):
         session["dataset_id"] = request.args["dataset_id"]
         session.modified = True
@@ -317,7 +322,7 @@ def render_file_list_page():
     if not check_files_and_annotations():
         return redirect("/", code=302)
 
-    if session["dataset_id"] in datasets.keys():
+    if session["dataset_id"] in datasets:
         dataset = datasets[session["dataset_id"]]
         annotations_sorted = [
             dataset["annotations"][ff] for ff in dataset["file_names"]
@@ -567,7 +572,7 @@ def update_cache(file_id, file_names, annotations, audio_dir):
     ]
     cache_data = sorted(cache_data, key=lambda item: item["created_at"])
     cache_size = max(config.CACHE_SIZE, 3)  # want to keep the most recent ones
-    to_remove = cache_data[0: max(len(cache_data) - cache_size, 0)]
+    to_remove = cache_data[0 : max(len(cache_data) - cache_size, 0)]
     for item in to_remove:
         del cache[item["cache_key"]]
     print("size of cache: " + str(len(cache)))
@@ -720,7 +725,7 @@ def create_dataset(audio_dir, annotation_dir):
 
     # load or create annotations
     for ann_path in ann_file_paths:
-        ann_path_short = ann_path[len(annotation_dir):]
+        ann_path_short = ann_path[len(annotation_dir) :]
         if os.path.isfile(ann_path):
             try:
                 with open(ann_path) as da:
