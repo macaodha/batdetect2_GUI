@@ -1,11 +1,13 @@
-from batdetect2_gui import audio_utils as au
+import base64
 import os
 from io import BytesIO
-import base64
+
 import matplotlib.pyplot as plt
-from PIL import Image
-from batdetect2_gui import wavfile
 import numpy as np
+from PIL import Image
+
+from batdetect2_gui import audio_utils as au
+from batdetect2_gui import wavfile
 
 
 def compute_audio_data(annotation, audio_dir, playback_time_expansion):

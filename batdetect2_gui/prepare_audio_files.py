@@ -8,9 +8,11 @@ and where in the file you start clipping from.
 """
 
 import argparse
-from pathlib import Path
 import os
+from pathlib import Path
+
 import numpy as np
+
 from batdetect2_gui import audio_utils as au
 from batdetect2_gui import wavfile
 

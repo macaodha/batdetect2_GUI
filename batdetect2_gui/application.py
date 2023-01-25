@@ -1,26 +1,22 @@
 #!/usr/bin/env python
 from __future__ import print_function
-from flask import (
-    Flask,
-    session,
-    request,
-    render_template,
-    redirect,
-    copy_current_request_context,
-)
+
+import copy
+import hashlib
+import json
+import os
+import random
+import sys
+import time
 import uuid
 from pathlib import Path
-import random
-import json
-import sys
 from threading import Thread
-import copy
-import os
-import time
+
+from flask import (Flask, copy_current_request_context, redirect,
+                   render_template, request, session)
+
 from batdetect2_gui import config
 from batdetect2_gui import generate_data as gd
-import hashlib
-
 
 application = Flask(__name__)
 application.secret_key = config.SECRET_KEY
