@@ -11,8 +11,8 @@ import argparse
 from pathlib import Path
 import os
 import numpy as np
-import audio_utils as au
-import wavfile
+from batdetect2_gui import audio_utils as au
+from batdetect2_gui import wavfile
 
 
 def main(args):

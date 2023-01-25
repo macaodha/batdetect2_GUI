@@ -1,10 +1,10 @@
-import audio_utils as au
+from batdetect2_gui import audio_utils as au
 import os
 from io import BytesIO
 import base64
 import matplotlib.pyplot as plt
 from PIL import Image
-import wavfile
+from batdetect2_gui import wavfile
 import numpy as np
 
 

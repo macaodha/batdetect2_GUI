@@ -1,6 +1,6 @@
 import numpy as np
 from PIL import Image
-import wavfile
+from batdetect2_gui import wavfile
 import warnings
 
 

@@ -17,8 +17,8 @@ from threading import Thread
 import copy
 import os
 import time
-import config
-import generate_data as gd
+from batdetect2_gui import config
+from batdetect2_gui import generate_data as gd
 import hashlib
 
 
@@ -571,7 +571,7 @@ def update_cache(file_id, file_names, annotations, audio_dir):
     ]
     cache_data = sorted(cache_data, key=lambda item: item["created_at"])
     cache_size = max(config.CACHE_SIZE, 3)  # want to keep the most recent ones
-    to_remove = cache_data[0 : max(len(cache_data) - cache_size, 0)]
+    to_remove = cache_data[0: max(len(cache_data) - cache_size, 0)]
     for item in to_remove:
         del cache[item["cache_key"]]
     print("size of cache: " + str(len(cache)))
@@ -724,7 +724,7 @@ def create_dataset(audio_dir, annotation_dir):
 
     # load or create annotations
     for ann_path in ann_file_paths:
-        ann_path_short = ann_path[len(annotation_dir) :]
+        ann_path_short = ann_path[len(annotation_dir):]
         if os.path.isfile(ann_path):
             try:
                 with open(ann_path) as da:
@@ -769,9 +769,3 @@ def create_dataset(audio_dir, annotation_dir):
     datasets[dataset["id"]] = dataset
 
     return dataset["id"]
-
-
-if __name__ == "__main__":
-
-    # application.run(host='127.0.0.1', port=8000, debug=True, use_reloader=True)
-    application.run(host="127.0.0.1", port=8000)
