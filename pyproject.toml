@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "batdetect2-gui"
+version = "0.0.1"
+authors = [
+  { name="Oisin Mac Aodha", email="oisin.macaodha@ed.ac.uk" },
+]
+description = "BatDetect2: Audio Annotation Interface"
+readme = "README.md"
+requires-python = ">=3.7"
+dependencies = [
+    "flask",
+    "matplotlib",
+    "numpy",
+    "Pillow",
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[tool.setuptools]
+packages = ["batdetect2_gui"]
+
+[project.urls]
+"Homepage" = "https://github.com/macaodha/batdetect2_GUI"
+"Bug Tracker" = "https://github.com/macaodha/batdetect2_GUI/issues"
+
+[project.scripts]
+batdetect2-gui = "batdetect2_gui.application:main"
+batdetect2-clip = "batdetect2_gui.prepare_audio_files:main"
