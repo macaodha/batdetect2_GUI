@@ -1,5 +1,9 @@
 # BatDetect2: Audio Annotation Interface
 
+This repository is no longer supported, and we recommend that **Whombat** is used instead:   
+https://github.com/mbsantiago/whombat
+_________________________
+
 This GUI allows you to view and edit the predictions from the [BatDetect2](https://github.com/macaodha/batdetect2) bat call classification model. You can also make your own annotations for training your own models. The GUI is web based and will run in your web browser locally - see the video linked below for an overview.  
 
 
